@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show All</title>
+</head>
+<body>
+<table>
+    <th style="cursor:pointer;">FirstName</th>
+    <th style="cursor:pointer;">LastName</th>
+    <th style="cursor:pointer;">DOB</th>
+    <th style="cursor:pointer;">Gender</th>
+    <th style="cursor:pointer;">Email</th>
+    <th style="cursor:pointer;">Address</th>
+    <th>Update Button</th>
+    {{range . }}
+    <tr>
+        <td>{{ .FirstName }}</td>
+        <td>{{ .LastName }}</td>
+        <td>{{ .BirthDate }}</td>
+        <td>{{ .Gender }}</td>
+        <td>{{ .Email }}</td>
+        <td>{{ .Address }}</td>
+        <td><form action="/update" method="get">
+            <button name="userid" value="{{.Userid}}">Update</button>
+        </form></td>
+    </tr>
+    {{end}}
+</table>
+
+<script >
+    const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+    const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+            v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+        Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+            .forEach(tr => table.appendChild(tr) );
+    })));
+</script>
+
+</body>
+</html>

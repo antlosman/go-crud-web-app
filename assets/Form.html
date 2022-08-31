@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+<form action="/submit" method="post">
+    {{if .}}
+    UserId:<input type="text" name="userid" value={{.}} readonly>
+    {{end}}
+    First Name:<input type="text" name="fname">
+    Last Name:<input type="text" name="lname">
+    Date of Birth:<input type="date" name="dob">
+    Gender:<select name="gender">
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+</select>
+    Email:<input type="text" name="mail">
+    Address:<input type="text" name="address">
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>
